@@ -20,7 +20,7 @@ let
     xorg.libXcursor xorg.libXi xorg.libXcomposite xorg.libXtst xorg.libSM xorg.libICE libGL libglvnd freetype
     openssl curl zlib dbus-glib ncurses
     
-    libva mesa.drivers mesa
+    libva mesa
     ncurses5 ncurses6 ncurses
     pkgs.curl.out
     libcef # (https://github.com/ptitSeb/box64/issues/1383)?
@@ -98,9 +98,9 @@ let
     SDL2_ttf
     bzip2
 
-    SDL sdl3 SDL2 sdlpop SDL_ttf SDL_net SDL_gpu SDL_gfx sdlookup SDL2_ttf SDL2_net SDL2_gfx SDL_sound SDL_sixel 
+    SDL sdl3 SDL2 sdlpop SDL_ttf SDL_net SDL_gfx sdlookup SDL2_ttf SDL2_net SDL2_gfx SDL_sound SDL_sixel 
     SDL_mixer SDL_image SDL_Pango sdl-jstest SDL_compat SDL2_sound SDL2_mixer SDL2_image SDL2_Pango SDL_stretch 
-    SDL_audiolib SDL2_mixer_2_0 SDL2_image_2_6 SDL2_image_2_0
+    SDL_audiolib
 
     #libstdcxx5
     libcdada
@@ -165,7 +165,6 @@ let
     vulkan-headers
     vulkan-loader
     vulkan-tools
-    mesa.drivers
     ncurses5
     ncurses6
     pkgs.curl.out
@@ -235,9 +234,7 @@ let
     
     # SDL_stretch SDL STREACH ERROR
     SDL_audiolib
-    SDL2_image_2_6
-    SDL2_image_2_0
-    # SDL2_mixer SDL_mixer SDL2_mixer_2_0 # timidity error
+    # SDL2_mixer SDL_mixer # timidity error
     libcdada
     libgcc
     # xapp mate components? GIVES ERROR, ALSO, WHY would i need
@@ -255,7 +252,7 @@ let
     # gcc-unwrapped.lib libgccjitga (gcc jit error)
     # libdbusmenu: causing Error: detected mismatched Qt dependencies when compiled for steamLibsI686 (maybe not)
     # sbclPackages.cl-cairo2-xlib sbcl error?
-    # SDL sdl3 SDL2 sdlpop SDL_ttf SDL_net SDL_gpu SDL_gfx (-baseqt conflict error)
+    # SDL sdl3 SDL2 sdlpop SDL_ttf SDL_net SDL_gfx (-baseqt conflict error)
     # swiftshader (CPU implementation of vulkan)
     # libcef (https://github.com/ptitSeb/box64/issues/1383) error: unsupported system i686-linux
   ];
@@ -311,7 +308,6 @@ let
     vulkan-headers
     vulkan-loader
     vulkan-tools
-    mesa.drivers
     ncurses5
     ncurses6
     pkgs.curl.out
@@ -380,9 +376,8 @@ let
     
     # SDL_stretch SDL STREACH ERROR
     SDL_audiolib
-    SDL2_image_2_6
-    SDL2_image_2_0
-    # SDL2_mixer SDL_mixer SDL2_mixer_2_0 # timidity error
+    
+    # SDL2_mixer SDL_mixer # timidity error
     libcdada
     libgcc
     # xapp mate components? GIVES ERROR, ALSO, WHY would i need
@@ -400,7 +395,7 @@ let
     # gcc-unwrapped.lib libgccjitga (gcc jit error)
     # libdbusmenu: causing Error: detected mismatched Qt dependencies when compiled for steamLibsI686 (maybe not)
     # sbclPackages.cl-cairo2-xlib sbcl error?
-    # SDL sdl3 SDL2 sdlpop SDL_ttf SDL_net SDL_gpu SDL_gfx (-baseqt conflict error)
+    # SDL sdl3 SDL2 sdlpop SDL_ttf SDL_net SDL_gfx (-baseqt conflict error)
     # swiftshader (CPU implementation of vulkan)
     # libcef (https://github.com/ptitSeb/box64/issues/1383) error: unsupported system i686-linux
   ];
@@ -526,7 +521,7 @@ let
     owner = "ptitSeb";
     repo = "box64";
     rev = "main";
-    sha256 = "sha256-55kNxQ/aDIRFFp7qFrevQpAKHXa6VWbSSfyZGbm1kJ0=";
+    sha256 = "sha256-/2USXRtsmhnsR0DNPmidNQ4JV6Gs8k5W5RIIPu6u4V4=";
   };
 in
 
@@ -558,14 +553,14 @@ let
 
     # # vulkaninfo should work with CPU now, probably should remove if I MAKE THIS WORK
     # export VK_ICD_FILENAMES=${pkgs.swiftshader}/share/vulkan/icd.d/vk_swiftshader_icd.json; 
-    export VK_ICD_FILENAMES=${pkgs.mesa.drivers}/share/vulkan/icd.d/lvp_icd.aarch64.json; # or radeon_icd.aarch64.json?(no)
+    export VK_ICD_FILENAMES=${pkgs.mesa}/share/vulkan/icd.d/lvp_icd.aarch64.json; # or radeon_icd.aarch64.json?(no)
 
     #export BOX64_LD_LIBRARY_PATH="${lib.concatMapStringsSep ":" (pkg: "${pkg}/lib") (steamLibs)}:$HOME/.local/share/Steam/ubuntu12_32/steam-runtime/lib/i386-linux-gnu";
     #export LD_LIBRARY_PATH="${lib.concatMapStringsSep ":" (pkg: "${pkg}/lib") (steamLibs)}:$HOME/.local/share/Steam/ubuntu12_32/steam-runtime/lib/i386-linux-gnu";
   '';
 
   # FHS environment that spawns a bash shell by default, or runs a given command if arguments are provided
-  steamFHS = pkgs.buildFHSUserEnv {
+  steamFHS = pkgs.buildFHSEnv {
     name = "steam-fhs";
     targetPkgs = pkgs: (with pkgs; [
       box64-bleeding-edge box86 steam-run xdg-utils

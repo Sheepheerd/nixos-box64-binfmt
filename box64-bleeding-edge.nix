@@ -17,7 +17,7 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "box64-bleeding-edge";
   #version = "0.3.4";
   #version = "c40f9651bc51c0f3446484233d6ce63d05ec4b7b"; 
-  version = "b472459a22169c1bf1932f5e69577ac149c1b2d7"; 
+  version = "03d220b1d297a9e5be81760833b014edf9dfe7ab"; 
   binaryName = "box64-bleeding-edge";
   doCheck = false;
 
