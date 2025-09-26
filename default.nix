@@ -83,8 +83,8 @@ let
     libllvm
 
     libdrm.out
-    unstable.libgbm
-    unstable.libgbm.out
+    libgbm
+    libgbm.out
 
     libcap libcap_ng libcaption
 
@@ -213,8 +213,8 @@ let
     libxml2
     llvmPackages.libllvm
     libdrm.out
-    unstable.libgbm
-    unstable.libgbm.out
+    libgbm
+    libgbm.out
     libcap
     libcap_ng
     libcaption
@@ -358,8 +358,8 @@ let
     libxml2
     llvmPackages.libllvm
     libdrm.out
-    unstable.libgbm
-    unstable.libgbm.out
+    libgbm
+    libgbm.out
     libcap
     libcap_ng
     libcaption
@@ -754,7 +754,7 @@ in {
       # steam-related packages
       glmark2-x86
       box64-fhs
-      unstable.fex # idfk man
+      # fex # idfk man
       #steamx86
       pkgs.x86.steam-unwrapped
       # pkgs.x86.heroic-unwrapped
