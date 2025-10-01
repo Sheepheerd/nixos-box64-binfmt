@@ -33,7 +33,6 @@ let
     gtk3-x11          # Explicitly include GTK2 X11 libraries
 
     libmpg123
-    ibus-engines.libpinyin
     libnma
     libnma-gtk4
     libappindicator libappindicator-gtk3 libappindicator-gtk2
@@ -42,7 +41,7 @@ let
 
     # Keep existing libraries and add:
     libudev-zero
-    libusb1 ibus-engines.kkc gtk3
+    libusb1 gtk3
 
     xdg-utils
     
