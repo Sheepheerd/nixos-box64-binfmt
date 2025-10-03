@@ -665,6 +665,7 @@ in {
         x86pkgs = import pkgs.path {
           system = "x86_64-linux";
           config.allowUnfree = true;
+          config.allowUnsupportedSystem = true; # maybe not needed
         };
       in {
         inherit (x86pkgs) steam-run steam-unwrapped;
@@ -675,7 +676,7 @@ in {
     
     # Uncomment these lines if you need to set extra platforms for binfmt:
     # you can use qemu-x86_64 /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/bash, to get in a shell
-    boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+    #boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
     # services.qemuGuest.enable = true;
 
     # virtualisation.vmVariant = {
@@ -710,7 +711,7 @@ in {
 
 
     # nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
-    nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+    # nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
 
 
 
@@ -750,7 +751,7 @@ in {
       box64-fhs
       # fex # idfk man
       #steamx86
-      pkgs.x86.steam-unwrapped
+      #pkgs.x86.steam-unwrapped
       # pkgs.x86.heroic-unwrapped
       # steamcmdx86Wrapper
       # x86pkgs.steamcmd
@@ -759,7 +760,7 @@ in {
       #pkgs.pkgsCross.gnu32.steam
       steamFHS
       box64-bleeding-edge
-      pkgs.x86.bash #(now this one appears with whereis bash)
+      #pkgs.x86.bash #(now this one appears with whereis bash)
       # muvm
       # additional steam-run tools
       # steam-tui steamcmd steam-unwrapped

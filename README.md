@@ -5,13 +5,6 @@
 Uses box64 to run x86_64 and i368 binaries in nixOS. Creates a proper FHS environment and can register binfmt entries to automatically run x86 binaries.
 It provides its own `box64-bleeding-edge` package, with the bleeding edge changes and box32 support to run 32bit software (like `steam`) as well.
 
-This flake will also automatically add
-```nix
-boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
-nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
-```
-To your config, this makes it possible for your `aarch64` system to build the x86 applications or fetch them from `cache.nixos.org`. Note that if a package has to be built, it will likely take a long time, cuz this uses `qemu` emulation.
-
 ## Installation with flakes and Usage
 
 Here's a minimal `flake.nix` demonstrating how to include the `nixos-box64-binfmt` module and its x86_64 package overlay:
@@ -56,7 +49,14 @@ Here's a minimal `flake.nix` demonstrating how to include the `nixos-box64-binfm
 }
 ```
 
-Then, in your `configuration.nix` or equivelent:
+Then, in your `configuration.nix` or equivalent add these lines:
+
+```nix
+boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+```
+Just like demonstrated below. Note that you have to run once with the `emulatedSystems` and `extra-platforms` defined before enabling `box64-binfmt.enable` so your system can compile this flake, it will use qemu emulation for the packages that require`x86_64-linux`:
+
 ```nix
 # configuration.nix
 { pkgs, inputs, ... }:
@@ -66,6 +66,25 @@ Then, in your `configuration.nix` or equivelent:
     inputs.box64-binfmt.nixosModules.default
   ];
 
+  boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+  nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+  box64-binfmt.enable = false; # Disable
+}
+```
+
+Then you may start installing x86 packages, not that hardware acceleration hasn't been tested, and steam doesn't seem to work as of now: 
+
+```nix
+# configuration.nix
+{ pkgs, inputs, ... }:
+
+{
+  imports = [
+    inputs.box64-binfmt.nixosModules.default
+  ];
+
+  boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
+  nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
   box64-binfmt.enable = true; # Enable 
 
   environment.systemPackages = [
@@ -75,7 +94,7 @@ Then, in your `configuration.nix` or equivelent:
     
     pkgs.htop                  # Native packages work as usual
 
-    # This is the box64 version with box32 experimental support built, it is alrerady installed so this is not needed
+    # This is the box64 version with box32 experimental support built, it is already installed so this is not needed
     # inputs.box64-binfmt.packages.${pkgs.system}.box64-bleeding-edge
   ];
 }
