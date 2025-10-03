@@ -1,5 +1,5 @@
 # Need to wire this up to use my own built box64 package
-  { 
+{
   lib,
   stdenv,
   fetchFromGitHub,
@@ -16,8 +16,8 @@
 stdenv.mkDerivation (finalAttrs: {
   pname = "box64-bleeding-edge";
   #version = "0.3.4";
-  #version = "c40f9651bc51c0f3446484233d6ce63d05ec4b7b"; 
-  version = "03d220b1d297a9e5be81760833b014edf9dfe7ab"; 
+  #version = "c40f9651bc51c0f3446484233d6ce63d05ec4b7b";
+  version = "03d220b1d297a9e5be81760833b014edf9dfe7ab";
   binaryName = "box64-bleeding-edge";
   doCheck = false;
 
@@ -26,7 +26,7 @@ stdenv.mkDerivation (finalAttrs: {
     repo = "box64";
     #rev = "v${finalAttrs.version}";
     rev = "${finalAttrs.version}";
-    hash = "sha256-hInhl9Zmj4SwCUt4OFbN7yvN9MyBW2ImyhLnDgUqL5Q=";
+    hash = "sha256-Z8r7aonVj7VSifgLKx/L7VRdGNnQtTvS4mjI+2+uPxY";
   };
 
   nativeBuildInputs = [
@@ -34,32 +34,31 @@ stdenv.mkDerivation (finalAttrs: {
     python3
   ];
 
-  cmakeFlags =
-    [
-      (lib.cmakeBool "NOGIT" true)
+  cmakeFlags = [
+    (lib.cmakeBool "NOGIT" true)
 
-      # Arch mega-option
-      (lib.cmakeBool "ARM64" stdenv.hostPlatform.isAarch64)
-      (lib.cmakeBool "RV64" stdenv.hostPlatform.isRiscV64)
-      (lib.cmakeBool "PPC64LE" (stdenv.hostPlatform.isPower64 && stdenv.hostPlatform.isLittleEndian))
-      (lib.cmakeBool "LARCH64" stdenv.hostPlatform.isLoongArch64)
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isx86_64 [
-      # x86_64 has no arch-specific mega-option, manually enable the options that apply to it
-      (lib.cmakeBool "LD80BITS" true)
-      (lib.cmakeBool "NOALIGN" true)
-    ]
-    ++ [
-      # Arch dynarec
-      (lib.cmakeBool "ARM_DYNAREC" (withDynarec && stdenv.hostPlatform.isAarch64))
-      (lib.cmakeBool "RV64_DYNAREC" (withDynarec && stdenv.hostPlatform.isRiscV64))
-      (lib.cmakeBool "LARCH64_DYNAREC" (withDynarec && stdenv.hostPlatform.isLoongArch64))
-    ]
-    ++ [
-      # Box32 integration
-      (lib.cmakeBool "BOX32" true)
-      (lib.cmakeBool "BOX32_BINFMT" true)
-    ];
+    # Arch mega-option
+    (lib.cmakeBool "ARM64" stdenv.hostPlatform.isAarch64)
+    (lib.cmakeBool "RV64" stdenv.hostPlatform.isRiscV64)
+    (lib.cmakeBool "PPC64LE" (stdenv.hostPlatform.isPower64 && stdenv.hostPlatform.isLittleEndian))
+    (lib.cmakeBool "LARCH64" stdenv.hostPlatform.isLoongArch64)
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isx86_64 [
+    # x86_64 has no arch-specific mega-option, manually enable the options that apply to it
+    (lib.cmakeBool "LD80BITS" true)
+    (lib.cmakeBool "NOALIGN" true)
+  ]
+  ++ [
+    # Arch dynarec
+    (lib.cmakeBool "ARM_DYNAREC" (withDynarec && stdenv.hostPlatform.isAarch64))
+    (lib.cmakeBool "RV64_DYNAREC" (withDynarec && stdenv.hostPlatform.isRiscV64))
+    (lib.cmakeBool "LARCH64_DYNAREC" (withDynarec && stdenv.hostPlatform.isLoongArch64))
+  ]
+  ++ [
+    # Box32 integration
+    (lib.cmakeBool "BOX32" true)
+    (lib.cmakeBool "BOX32_BINFMT" true)
+  ];
 
   installPhase = ''
     runHook preInstall
@@ -116,3 +115,4 @@ stdenv.mkDerivation (finalAttrs: {
     ];
   };
 })
+
