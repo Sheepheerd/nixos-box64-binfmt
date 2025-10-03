@@ -1,5 +1,4 @@
-# Need to wire this up to use my own built box64 package
-  { 
+{
   lib,
   stdenv,
   fetchFromGitHub,
@@ -15,24 +14,26 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "box64-bleeding-edge";
-  #version = "0.3.4";
-  #version = "c40f9651bc51c0f3446484233d6ce63d05ec4b7b"; 
-  version = "03d220b1d297a9e5be81760833b014edf9dfe7ab"; 
+  version = "5768989e54ef596b77449f11e1910186a835e422";
   binaryName = "box64-bleeding-edge";
   doCheck = false;
 
   src = fetchFromGitHub {
     owner = "ptitSeb";
     repo = "box64";
-    #rev = "v${finalAttrs.version}";
     rev = "${finalAttrs.version}";
-    hash = "sha256-hInhl9Zmj4SwCUt4OFbN7yvN9MyBW2ImyhLnDgUqL5Q=";
+    hash = "sha256-rXuzpUyKanIgqttJCg7boA4E0rdd3sHmJNBB1VOmQIY=";
   };
 
   nativeBuildInputs = [
     cmake
     python3
   ];
+
+  # Add compiler flags to enable ARMv8.1-A features
+  env = lib.optionalAttrs stdenv.hostPlatform.isAarch64 {
+    NIX_CFLAGS_COMPILE = "-march=armv8.1-a+crc";
+  };
 
   cmakeFlags =
     [
@@ -69,8 +70,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  # doCheck = stdenv.buildPlatform.canExecute stdenv.hostPlatform;
-
   doInstallCheck = stdenv.buildPlatform.canExecute stdenv.hostPlatform;
 
   installCheckPhase = ''
@@ -89,8 +88,6 @@ stdenv.mkDerivation (finalAttrs: {
     updateScript = gitUpdater { rev-prefix = "v"; };
     tests.hello =
       runCommand "box64-test-hello" { nativeBuildInputs = [ finalAttrs.finalPackage ]; }
-        # There is no actual "Hello, world!" with any of the logging enabled, and with all logging disabled it's hard to
-        # tell what problems the emulator has run into.
         ''
           BOX64_NOBANNER=0 BOX64_LOG=1 ${finalAttrs.binaryName} ${lib.getExe hello-x86_64} --version | tee $out
         '';
