@@ -72,7 +72,7 @@ Just like demonstrated below. Note that you have to run once with the `emulatedS
 }
 ```
 
-Then you may start installing x86 packages, not that hardware acceleration hasn't been tested, and steam doesn't seem to work as of now: 
+Then you may start installing x86 packages, note that hardware acceleration hasn't been tested, and steam doesn't seem to work as of now: 
 
 ```nix
 # configuration.nix
