@@ -53,7 +53,7 @@ let
     vulkan-headers
     vulkan-loader
     vulkan-validation-layers
-    vulkan-tools        # vulkaninfo
+    # vulkan-tools        # vulkaninfo
     shaderc             # GLSL to SPIRV compiler - glslc
     renderdoc           # Graphics debugger
     tracy               # Graphics profiler
@@ -163,7 +163,7 @@ let
     ncurses
     vulkan-headers
     vulkan-loader
-    vulkan-tools
+    # vulkan-tools
     ncurses5
     ncurses6
     pkgs.curl.out
@@ -306,7 +306,7 @@ let
     ncurses
     vulkan-headers
     vulkan-loader
-    vulkan-tools
+    # vulkan-tools
     ncurses5
     ncurses6
     pkgs.curl.out
@@ -520,7 +520,7 @@ let
     owner = "ptitSeb";
     repo = "box64";
     rev = "main";
-    sha256 = "sha256-7m1/EG+hTtQNpUplpTrcjWErLrnw1QRfBs1gfQ/t6Mo=";
+    sha256 = "sha256-V+H+DjEfX/GzQ/4eqouEu8GAe677K393PAqgEsEvhXA=";
   };
 in
 
@@ -544,7 +544,6 @@ let
     export BOX64_AVX=1;
 
     # https://github.com/NixOS/nixpkgs/issues/221056#issuecomment-2454222836
-    # echo "qemu-${pkgs.qemu-user.version}-user-${system} cp ${pkgs.pkgsStatic.qemu-user}/bin/qemu-${(lib.systems.elaborate { inherit system; }).qemuArch} $out; }"
 
     # Set SwiftShader as primary
     export VULKAN_SDK="${pkgs.vulkan-headers}";
@@ -699,7 +698,7 @@ in {
 
     #security.wrappers.bwrap.setuid = lib.mkForce false;
     # security.unprivilegedUsernsClone = true;  # Still required for bwrap
-    # boot.binfmt.preferStaticEmulators = true; # segmentation faults everywhere! Maybe should open an issue?
+    boot.binfmt.preferStaticEmulators = false; # segmentation faults everywhere! Maybe should open an issue?
     # qemu-x86_64 /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/bash /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/katawa-shoujo
 
     # qemu-x86_64 /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/bash /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/katawa-shoujo

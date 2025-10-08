@@ -55,7 +55,7 @@ Then, in your `configuration.nix` or equivalent add these lines:
 boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
 nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
 ```
-Just like demonstrated below. Note that you have to `nixos-rebuild` once with the `emulatedSystems` and `extra-platforms` defined before enabling `box64-binfmt.enable` so your system can compile this flake, it will use qemu emulation for the packages that require`x86_64-linux`:
+Just like demonstrated below. Note that you have to `nixos-rebuild` once with the `emulatedSystems` and `extra-platforms` defined before enabling `box64-binfmt.enable` so your system can compile this flake, it will use qemu emulation only to build the packages that require `x86_64-linux`:
 
 ```nix
 # configuration.nix
