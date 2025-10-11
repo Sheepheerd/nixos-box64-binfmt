@@ -28,135 +28,6 @@ let
 
   steamLibsX86_64 = with pkgs.pkgsCross.gnu64; [
 
-    glibc
-    glib.out
-    # gtk2 unityhub at-spi2-core libdbusmenu # one of these is making a compilation error
-    gdk-pixbuf
-    cairo.out
-    fontconfig
-    libdrm
-    libvdpau
-    expat
-    util-linux
-    libnotify
-    gnutls
-    openalSoft
-    udev
-    xorg.libXinerama
-    xorg.libXdamage
-    xorg.libXScrnSaver
-    xorg.libxcb
-    libva
-    libpng
-    libpulseaudio
-    libjpeg
-    libvorbis
-    stdenv.cc.cc.lib
-    xorg.libX11
-    xorg.libXext
-    xorg.libXrender
-    xorg.libXfixes
-    xorg.libXcursor
-    xorg.libXi
-    xorg.libXcomposite
-    xorg.libXtst
-    xorg.libSM
-    xorg.libICE
-    libGL
-    libglvnd
-    freetype
-    openssl
-    curl
-    zlib
-    dbus-glib # compilation error
-    ncurses
-    vulkan-headers
-    vulkan-loader
-    # vulkan-tools
-    ncurses5
-    ncurses6
-    pkgs.curl.out
-    xcbutilxrm
-    xorg.xcbutilkeysyms
-    # pango pango.out SDL2_Pango SDL_Pango # pango compile error
-    gtk3-x11
-    libmpg123
-    # ibus-engines.libpinyin Error libpiny
-    libnma
-    libnma-gtk4
-    libappindicator
-    libappindicator-gtk3
-    libappindicator-gtk2
-    nss
-    nspr
-    libudev-zero
-    libusb1
-    # ibus-engines.kkc libkkc error
-    gtk3
-    xdg-utils
-    vulkan-validation-layers
-    zenity
-    xorg.libXrandr
-    dbus
-    libnsl
-    # libunity # dee package error caused by this
-    pciutils
-    openal
-    passt
-    cups
-    alsa-lib
-    libxslt
-    zstd
-    xorg.libxshmfence
-    avahi
-    xorg.libpciaccess
-    elfutils
-    lm_sensors
-    libffi
-    flac
-    libogg
-    libbsd
-    libxml2
-    llvmPackages.libllvm
-    libdrm.out
-    libgbm
-    libgbm.out
-    libcap
-    libcap_ng
-    libcaption
-    gmp
-    gmpxx
-    libgmpris
-    SDL2
-    SDL2_image
-    SDL2_ttf
-    bzip2
-    sdlookup
-    SDL2_net
-    SDL2_gfx
-    #  SDL_sound SDL2_sound # SLD_SOUND error
-    SDL_sixel
-    sdl-jstest
-    SDL_compat
-
-    # SDL_stretch SDL STREACH ERROR
-    SDL_audiolib
-
-    # SDL2_mixer SDL_mixer # timidity error
-    libcdada
-    libgcc
-    # xapp mate components? GIVES ERROR, ALSO, WHY would i need
-    libselinux
-    python3
-    wayland
-    wayland-protocols
-    patchelf
-    libGLU
-    fribidi
-    brotli
-    fribidi.out
-    brotli.out
-
     # Comments moved below:
     # libstdcxx5 ?
     # gcc-unwrapped.lib libgccjitga (gcc jit error)
@@ -531,23 +402,17 @@ in
       in
       [
         # steam-related packages
-        glmark2-x86
         box64-fhs
         # fex # idfk man
         #steamx86
-        pkgs.x86.steam-unwrapped
         # pkgs.x86.heroic-unwrapped
         # steamcmdx86Wrapper
         # x86pkgs.steamcmd
         # heroicx86Wrapper
-        steamx86Wrapper
         #pkgs.pkgsCross.gnu32.steam
-        steamFHS
         box64-bleeding-edge
         pkgs.x86.bash # (now this one appears with whereis bash)
         # muvm
-        # additional steam-run tools
-        # steam-tui steamcmd steam-unwrapped
 
         # qemu-user    # Explicitly include QEMU user-mode emulators
       ];
