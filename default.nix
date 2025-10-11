@@ -108,7 +108,6 @@ let
     vulkan-validation-layers
     # vulkan-tools        # vulkaninfo
     shaderc # GLSL to SPIRV compiler - glslc
-    renderdoc # Graphics debugger
     tracy # Graphics profiler
     vulkan-tools-lunarg # vkconfig
 
@@ -120,88 +119,6 @@ let
     pciutils
     openal
     passt
-
-    # For Heroic
-    cups # For libcups
-    alsa-lib # For libasound
-    libxslt # For libxslt
-    zstd # For libzstd
-    xorg.libxshmfence # For libxshmfence
-    avahi # For libavahi
-    xorg.libpciaccess # For libpciaccess
-    elfutils # For libelf
-    lm_sensors # For libsensors
-    libffi # For libffi
-    flac # For libFLAC
-    libogg # For libogg
-    libbsd # For libbsd
-    libxml2 # For xml symbols
-    llvmPackages.libllvm # For libLLVM
-    libllvm
-
-    libdrm.out
-    libgbm
-    libgbm.out
-
-    libcap
-    libcap_ng
-    libcaption
-
-    gmp
-    gmpxx
-    libgmpris
-
-    SDL2
-    SDL2_image
-    SDL2_mixer
-    SDL2_ttf
-    bzip2
-
-    SDL
-    sdl3
-    SDL2
-    sdlpop
-    SDL_ttf
-    SDL_net
-    SDL_gfx
-    sdlookup
-    SDL2_ttf
-    SDL2_net
-    SDL2_gfx
-    SDL_sound
-    SDL_sixel
-    SDL_mixer
-    SDL_image
-    SDL_Pango
-    sdl-jstest
-    SDL_compat
-    SDL2_sound
-    SDL2_mixer
-    SDL2_image
-    SDL2_Pango
-    SDL_stretch
-    SDL_audiolib
-
-    #libstdcxx5
-    libcdada
-    libgcc
-
-    swiftshader # CPU implementation of vulkan
-
-    libGL
-    xapp
-    libunity
-    libselinux # libselinux
-
-    python3
-    wayland
-    wayland-protocols
-    patchelf
-    libGLU
-    fribidi
-    brotli
-    fribidi.out
-    brotli.out
   ];
   steamLibsI686 = with pkgs.pkgsCross.gnu32; [
     unityhub
