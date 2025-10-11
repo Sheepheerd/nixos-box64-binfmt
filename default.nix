@@ -106,8 +106,9 @@ let
     vulkan-headers
     vulkan-loader
     vulkan-validation-layers
-    vulkan-tools # vulkaninfo
+    # vulkan-tools        # vulkaninfo
     shaderc # GLSL to SPIRV compiler - glslc
+    renderdoc # Graphics debugger
     tracy # Graphics profiler
     vulkan-tools-lunarg # vkconfig
 
@@ -249,7 +250,7 @@ let
     ncurses
     vulkan-headers
     vulkan-loader
-    vulkan-tools
+    # vulkan-tools
     ncurses5
     ncurses6
     pkgs.curl.out
@@ -394,7 +395,7 @@ let
     ncurses
     vulkan-headers
     vulkan-loader
-    vulkan-tools
+    # vulkan-tools
     ncurses5
     ncurses6
     pkgs.curl.out
@@ -609,7 +610,7 @@ let
     owner = "ptitSeb";
     repo = "box64";
     rev = "main";
-    sha256 = "sha256-Jt2c09lypc1sDaTMxP+Il+6lpOmTSycpnjQIoVFbqZM=";
+    sha256 = "sha256-V+H+DjEfX/GzQ/4eqouEu8GAe677K393PAqgEsEvhXA=";
   };
 in
 
@@ -633,9 +634,6 @@ let
     export BOX64_AVX=1;
 
     # https://github.com/NixOS/nixpkgs/issues/221056#issuecomment-2454222836
-    # echo "qemu-${pkgs.qemu-user.version}-user-${system} cp ${pkgs.pkgsStatic.qemu-user}/bin/qemu-${
-      (lib.systems.elaborate { inherit system; }).qemuArch
-    } $out; }"
 
     # Set SwiftShader as primary
     export VULKAN_SDK="${pkgs.vulkan-headers}";
@@ -772,6 +770,7 @@ in
           x86pkgs = import pkgs.path {
             system = "x86_64-linux";
             config.allowUnfree = true;
+            config.allowUnsupportedSystem = true; # maybe not needed
           };
         in
         {
@@ -784,14 +783,7 @@ in
 
     # Uncomment these lines if you need to set extra platforms for binfmt:
     # you can use qemu-x86_64 /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/bash, to get in a shell
-    boot.binfmt.emulatedSystems = [
-      "i686-linux"
-      "x86_64-linux"
-      "i386-linux"
-      "i486-linux"
-      "i586-linux"
-      "i686-linux"
-    ];
+    #boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
     # services.qemuGuest.enable = true;
 
     # virtualisation.vmVariant = {
@@ -814,7 +806,7 @@ in
 
     #security.wrappers.bwrap.setuid = lib.mkForce false;
     # security.unprivilegedUsernsClone = true;  # Still required for bwrap
-    # boot.binfmt.preferStaticEmulators = true; # segmentation faults everywhere! Maybe should open an issue?
+    boot.binfmt.preferStaticEmulators = false; # segmentation faults everywhere! Maybe should open an issue?
     # qemu-x86_64 /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/bash /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/katawa-shoujo
 
     # qemu-x86_64 /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/bash /nix/store/ar34slssgxb42jc2kzlra86ra9cz1s7f-system-path/bin/katawa-shoujo
@@ -825,14 +817,7 @@ in
     # qemu-alpha       qemu-cris   qemu-i386     qemu-microblaze   qemu-mips64        qemu-mipsn32   qemu-ppc        qemu-riscv32  qemu-sh4      qemu-sparc32plus  qemu-xtensa
 
     # nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
-    nix.settings.extra-platforms = [
-      "i686-linux"
-      "x86_64-linux"
-      "i386-linux"
-      "i486-linux"
-      "i586-linux"
-      "i686-linux"
-    ];
+    # nix.settings.extra-platforms = ["i686-linux" "x86_64-linux" "i386-linux" "i486-linux" "i586-linux" "i686-linux"];
 
     environment.systemPackages =
       with pkgs;
