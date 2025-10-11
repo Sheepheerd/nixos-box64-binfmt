@@ -207,12 +207,10 @@ let
       (with pkgs; [
         box64-bleeding-edge
         box86
-        steam-run
         xdg-utils
         vulkan-validation-layers
         vulkan-headers
         libva-utils
-        swiftshader
       ])
       ++ steamLibs;
 
